@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(Math.random());
         startLabel.setVisibility(View.INVISIBLE);
 
+        System.out.println(scoreLabel.getText());
+
 
     }
 
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         if (boxY > frameHeight - boxSize) boxY = frameHeight - boxSize;
     }
 
+    //orange
     public void changeOrange(){
         orangeX -= 20;
         orange.setX(orangeX);
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //black
     public void changeBlack(){
         blackX -= 30;
         black.setX(blackX);
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //pink
     public void changePink(){
         pinkX -= 40;
         pink.setX(pinkX);
@@ -129,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+//    //衝突判定
+//    public void crush(float objectX, float objectY){
+//
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -170,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
+        System.out.println();
         return true;
     }
 }
