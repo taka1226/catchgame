@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         }
         box.setY(boxY);
 
-        if (boxY < -20) boxY = 0;
+        if (boxY < 0) boxY = 0;
         if (boxY > frameHeight - boxSize) boxY = frameHeight - boxSize;
     }
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         orangeX -= 20;
         orange.setX(orangeX);
 
-        if (orangeX < 0){
+        if (orangeX < -20){
             orangeX = screenWidth;
             orangeY = frameHeight * (float)Math.random();
             System.out.println(orangeY);
