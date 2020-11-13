@@ -95,11 +95,37 @@ public class MainActivity extends AppCompatActivity {
         orangeX -= 20;
         orange.setX(orangeX);
 
-        if (orangeX < -20){
+        if (orangeX < -50){
             orangeX = screenWidth;
             orangeY = frameHeight * (float)Math.random();
             System.out.println(orangeY);
             orange.setY(orangeY);
+
+        }
+    }
+
+    public void changeBlack(){
+        blackX -= 30;
+        black.setX(blackX);
+
+        if (blackX < -50){
+            blackX = screenWidth;
+            blackY = frameHeight * (float)Math.random();
+
+            black.setY(blackY);
+
+        }
+    }
+
+    public void changePink(){
+        pinkX -= 40;
+        pink.setX(pinkX);
+
+        if (pinkX < -50){
+            pinkX = screenWidth;
+            pinkY = frameHeight * (float)Math.random();
+
+            pink.setY(pinkY);
 
         }
     }
@@ -127,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                         public void run(){
                             changePos();
                             changeOrange();
+                            changeBlack();
+                            changePink();
                         }
                     });
                 }
