@@ -87,19 +87,20 @@ public class MainActivity extends AppCompatActivity {
         }
         box.setY(boxY);
 
-        if (boxY < 0) boxY = 0;
+        if (boxY < -20) boxY = 0;
         if (boxY > frameHeight - boxSize) boxY = frameHeight - boxSize;
     }
 
     public void changeOrange(){
         orangeX -= 20;
-        orangeY = frameHeight * (float)Math.random();
+        orange.setX(orangeX);
 
-        System.out.println(orangeY);
         if (orangeX < 0){
-            orangeX = 500;
-            orange.setX(orangeX);
+            orangeX = screenWidth;
+            orangeY = frameHeight * (float)Math.random();
+            System.out.println(orangeY);
             orange.setY(orangeY);
+
         }
     }
 
@@ -114,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
             boxY = (float)frameHeight / 2;
             System.out.println(boxY);
+
+
 
             startLabel.setVisibility(View.GONE);
             timer.schedule(new TimerTask(){
