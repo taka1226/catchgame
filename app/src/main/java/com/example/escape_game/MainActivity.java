@@ -2,6 +2,7 @@ package com.example.escape_game;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Timer timer = new Timer();
 
+    private int score = 0;
+
+    private SoundPlayer soundPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(Math.random());
         startLabel.setVisibility(View.INVISIBLE);
 
+        scoreLabel.setText("Score : 0");
+
         System.out.println(scoreLabel.getText());
+
+        soundPlayer = new SoundPlayer(this);
 
 
     }
@@ -91,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (boxY < 0) boxY = 0;
         if (boxY > frameHeight - boxSize) boxY = frameHeight - boxSize;
+        scoreLabel.setText("Score : " + score);
     }
 
     //orange
@@ -161,10 +171,12 @@ public class MainActivity extends AppCompatActivity {
                     handler.post(new Runnable(){
                         @Override
                         public void run(){
+                            hitCheck();
                             changePos();
                             changeOrange();
                             changeBlack();
                             changePink();
+
                         }
                     });
                 }
@@ -183,4 +195,51 @@ public class MainActivity extends AppCompatActivity {
         System.out.println();
         return true;
     }
+
+    public void hitCheck() {
+
+        // Orange
+        float orangeCenterX = orangeX + orange.getWidth() / 2;
+        float orangeCenterY = orangeY + orange.getHeight() / 2;
+
+        if (hitStatus(orangeCenterX, orangeCenterY)) {
+            orangeX = -10.0f;
+            score += 10;
+            soundPlayer.playHitSound();
+        }
+
+        // Pink
+        float pinkCenterX = pinkX + pink.getWidth() / 2;
+        float pinkCenterY = pinkY + pink.getHeight() / 2;
+
+        if (hitStatus(pinkCenterX, pinkCenterY)) {
+            pinkX = -10.0f;
+            score += 30;
+            soundPlayer.playHitSound();
+        }
+
+        // Black
+        float blackCenterX = blackX + black.getWidth() / 2;
+        float blackCenterY = blackY + black.getHeight() / 2;
+
+        if (hitStatus(blackCenterX, blackCenterY)) {
+            // Game Over!
+            soundPlayer.playOverSound();
+            if (timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+
+            // 結果画面へ
+            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+            intent.putExtra("SCORE", score);
+            startActivity(intent);
+        }
+    }
+
+    public boolean hitStatus(float centerX, float centerY) {
+        return (0 <= centerX && centerX <= boxSize &&
+                boxY <= centerY && centerY <= boxY + boxSize) ? true : false;
+    }
+
 }
